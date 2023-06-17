@@ -1,5 +1,5 @@
 user_profile_dict = {
-    'name': 'SAndeep',
+    'name': 'Sandy',
     'age': 25,
     'email': 'johndoe@example.com',
     'gender': 'male',
@@ -11,8 +11,8 @@ validation_rules_array = [
     {
         'field': 'name',
         'rules': [
-            {'name': 'type', 'value': str},
             {'name': 'min_length', 'value': 3},
+            {'name': 'type', 'value': str},
             {'name': 'required', 'value': True},
         ]
     },
@@ -65,45 +65,44 @@ def validate(dict, rules):
         for rules  in field_rules['rules']:
             rule_name = rules['name']
             rule_value = rules['value']
+            field_type = None
 
             if rule_name == 'type':
-                if type(value) != rule_value:
+                field_type = rule_value
+                if type(value) != field_type:
                     print('Type error')
                     return False
 
-        for rules  in field_rules['rules']:
-            rule_name = rules['name']
-            rule_value = rules['value']        
-            
-            if rule_name == 'min_length':
-                if len(value) < rule_value:
-                    print(f'length should be minimun {rule_value}')
-                    return False
-            elif rule_name == 'max_length':
-                if len(value) > rule_value:
-                    print(f'length should be maximum {rule_value}')
-                    return False
-            elif rule_name == 'min_value':
-                if value < rule_value:
-                    print(f'value should be minimun {rule_value}')
-                    return False
-            elif rule_name == 'max_value':
-                if value > rule_value:
-                    print(f'value should be maximum {rule_value}')
-                    return False
-            elif rule_name == 'valid_values':
-                if value not in rule_value:
-                    print(f'{value} is not valid')
-                    return False
-            elif rule_name == 'required':
-                if rule_value:
-                    if value is None:
-                        print(f'Required field is empty')
+            if field_type is not None:   
+                if rule_name == 'min_length':
+                    if len(value) < rule_value:
+                        print(f'length should be minimun {rule_value}')
                         return False
-            elif rule_name == 'length':
-                if len(value) != rule_value:
-                    print(f'Phone number length should be {rule_value}')
-                    return False
+                elif rule_name == 'max_length':
+                    if len(value) > rule_value:
+                        print(f'length should be maximum {rule_value}')
+                        return False
+                elif rule_name == 'min_value':
+                    if value < rule_value:
+                        print(f'value should be minimun {rule_value}')
+                        return False
+                elif rule_name == 'max_value':
+                    if value > rule_value:
+                        print(f'value should be maximum {rule_value}')
+                        return False
+                elif rule_name == 'valid_values':
+                    if value not in rule_value:
+                        print(f'{value} is not valid')
+                        return False
+                elif rule_name == 'required':
+                    if rule_value:
+                        if value is None:
+                            print(f'Required field is empty')
+                            return False
+                elif rule_name == 'length':
+                    if len(value) != rule_value:
+                        print(f'Phone number length should be {rule_value}')
+                        return False
     
     return True
 
