@@ -1,5 +1,5 @@
 user_profile_dict = {
-    'name': 'John Doe',
+    'name': 'Jhon',
     'age': 25,
     'email': 'johndoe@example.com',
     'gender': 'male',
@@ -8,21 +8,26 @@ user_profile_dict = {
 
 validation_rules = {
     'name': {
+        'type': str,
         'required': True,
         'min_length': 1
     },
     'age': {
+        'type': int,
         'min_value': 18,
         'max_value': 99
     },
     'email': {
+        'type': str,
         'min_length': 5,
         'max_length': 50
     },
     'gender': {
+        'type': str,
         'valid_values': ['male', 'female']
     },
     'address': {
+        'type': str,
         'required': False,
         'max_length': 50
     }
@@ -33,6 +38,11 @@ def validate(dict, rules):
         value = dict.get(field)
         
         for rule_name, rule_value  in field_rules.items():
+
+            if rule_name == 'type':
+                if type(value) != rule_value:
+                    return False
+            
             if rule_name == 'min_length':
                 if len(value) < rule_value:
                     print(f'length should be minimun {rule_value}')
@@ -56,7 +66,7 @@ def validate(dict, rules):
             elif rule_name == 'required':
                 if rule_value:
                     if value is None:
-                        print(f'Required field')
+                        print(f'Required field is empty')
                         return False
     
     return True
@@ -64,3 +74,9 @@ def validate(dict, rules):
                 
 
 print(validate(user_profile_dict, validation_rules))
+
+
+
+
+
+
