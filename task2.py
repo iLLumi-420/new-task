@@ -57,10 +57,10 @@ validation_rules_array = [
 ]
 
 
-def validate(dict, rules):
-    for field_rules in rules:
+def validate(user_info_dict, validation_rules_array):
+    for field_rules in validation_rules_array:
         field = field_rules['field']
-        value = dict.get(field)
+        value = user_info_dict.get(field)
         
         for rules  in field_rules['rules']:
             rule_name = rules['name']
