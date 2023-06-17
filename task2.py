@@ -1,6 +1,6 @@
 user_profile_dict = {
-    'name': 'assb',
-    'age': 'abc',
+    'age': 53,
+    'name': 'name',
     'email': 'johndoe@example.com',
     'gender': 'male',
     'address': '123 Main St',
@@ -10,81 +10,81 @@ user_profile_dict = {
 validation_rules_array = [
     {
         'field': 'name',
+        'type': str,
         'rules': [
             {'name': 'min_length', 'value': 3},
             {'name': 'required', 'value': True},
-            {'name': 'type', 'value': str},
         ]
     },
     {
         'field': 'age',
+        'type': int,
         'rules': [
             {'name': 'min_value', 'value': 18},
-            {'name': 'type', 'value': int},
             {'name': 'max_value', 'value': 99}
         ]
     },
     {
         'field': 'email',
+        'type': str,
         'rules': [
-            {'name': 'type', 'value': str},
             {'name': 'min_length', 'value': 5},
             {'name': 'max_length', 'value': 50}
         ]
     },
     {
         'field': 'gender',
+        'type' : str,
         'rules': [
-            {'name': 'type', 'value': str},
             {'name': 'valid_values', 'value': ['male', 'female']}
         ]
     },
     {
         'field': 'phone',
+        'type': str,
         'rules': [
-            {'name': 'type', 'value': str},
             {'name': 'length', 'value': 10},
         ]
     },
     {
         'field': 'address',
+        'type': str,
         'rules': [
             {'name': 'required', 'value': False},
-            {'name': 'type', 'value': str},
             {'name': 'max_length', 'value': 50}
         ]
     },
 ]
 
 
-def validate(dict, rules):
-    for field_rules in rules:
+def validate(dict, validation_rules_array):
+    for field_rules in validation_rules_array:
         field = field_rules['field']
+        field_type = field_rules['type']
         value = dict.get(field)
+
+        if(type(value) != field_type):
+            print('Type error')
+            return False
         
         for rules  in field_rules['rules']:
             rule_name = rules['name']
-            rule_value = rules['value'] 
-
-            if rule_name == 'type':
-                if type(value) != rule_value:
-                    print('Type error')
-                    return False       
+            rule_value = rules['value']      
             
             if rule_name == 'min_length':
-                if len(str(value)) < rule_value:
+                if len(value) < rule_value:
                     print(f'length should be minimun {rule_value}')
                     return False
             elif rule_name == 'max_length':
-                if len(str(value)) > rule_value:
+                if len(value) > rule_value:
                     print(f'length should be maximum {rule_value}')
                     return False
             elif rule_name == 'min_value':
-                if str(value) < str(rule_value):
+                if value < rule_value:
                     print(f'value should be minimun {rule_value}')
                     return False
             elif rule_name == 'max_value':
-                if str(value) > str(rule_value):
+                if value > rule_value:
                     print(f'value should be maximum {rule_value}')
                     return False
             elif rule_name == 'valid_values':
@@ -97,7 +97,7 @@ def validate(dict, rules):
                         print(f'Required field is empty')
                         return False
             elif rule_name == 'length':
-                if len(str(value)) != rule_value:
+                if len(value) != rule_value:
                     print(f'Phone number length should be {rule_value}')
                     return False
     
