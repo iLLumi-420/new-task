@@ -1,6 +1,6 @@
 user_profile_dict = {
-    'name': 'ab',
-    'age': 25,
+    'name': 'assb',
+    'age': 'abc',
     'email': 'johndoe@example.com',
     'gender': 'male',
     'address': '123 Main St',
@@ -80,11 +80,11 @@ def validate(dict, rules):
                     print(f'length should be maximum {rule_value}')
                     return False
             elif rule_name == 'min_value':
-                if value < rule_value:
+                if str(value) < str(rule_value):
                     print(f'value should be minimun {rule_value}')
                     return False
             elif rule_name == 'max_value':
-                if value > rule_value:
+                if str(value) > str(rule_value):
                     print(f'value should be maximum {rule_value}')
                     return False
             elif rule_name == 'valid_values':
@@ -106,3 +106,4 @@ def validate(dict, rules):
                 
 
 print(validate(user_profile_dict, validation_rules_array))
+
