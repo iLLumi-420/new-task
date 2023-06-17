@@ -3,7 +3,8 @@ user_profile_dict = {
     'age': 25,
     'email': 'johndoe@example.com',
     'gender': 'male',
-    'address': '123 Main St'
+    'address': '123 Main St',
+    'phone': '9861'
 }
 
 validation_rules = {
@@ -30,7 +31,11 @@ validation_rules = {
         'type': str,
         'required': False,
         'max_length': 50
-    }
+    },
+    'phone': {
+        'type': str,
+        'length': 10,
+    },
 }
 
 def validate(dict, rules):
@@ -68,6 +73,10 @@ def validate(dict, rules):
                     if value is None:
                         print(f'Required field is empty')
                         return False
+            elif rule_name == 'length':
+                if len(value) != rule_value:
+                    print(f'Phone number length should be {rule_value}')
+                    return False
     
     return True
 
