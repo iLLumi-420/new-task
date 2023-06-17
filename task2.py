@@ -1,5 +1,5 @@
 user_profile_dict = {
-    'name': 'Sandy',
+    'name': 'ab',
     'age': 25,
     'email': 'johndoe@example.com',
     'gender': 'male',
@@ -12,8 +12,8 @@ validation_rules_array = [
         'field': 'name',
         'rules': [
             {'name': 'min_length', 'value': 3},
-            {'name': 'type', 'value': str},
             {'name': 'required', 'value': True},
+            {'name': 'type', 'value': str},
         ]
     },
     {
@@ -57,61 +57,52 @@ validation_rules_array = [
 ]
 
 
-def validate(user_info_dict, validation_rules_array):
-    for field_rules in validation_rules_array:
+def validate(dict, rules):
+    for field_rules in rules:
         field = field_rules['field']
-        value = user_info_dict.get(field)
+        value = dict.get(field)
         
         for rules  in field_rules['rules']:
             rule_name = rules['name']
-            rule_value = rules['value']
-            field_type = None
+            rule_value = rules['value'] 
 
             if rule_name == 'type':
-                field_type = rule_value
-                if type(value) != field_type:
+                if type(value) != rule_value:
                     print('Type error')
+                    return False       
+            
+            if rule_name == 'min_length':
+                if len(str(value)) < rule_value:
+                    print(f'length should be minimun {rule_value}')
                     return False
-
-            if field_type is not None:   
-                if rule_name == 'min_length':
-                    if len(value) < rule_value:
-                        print(f'length should be minimun {rule_value}')
+            elif rule_name == 'max_length':
+                if len(str(value)) > rule_value:
+                    print(f'length should be maximum {rule_value}')
+                    return False
+            elif rule_name == 'min_value':
+                if value < rule_value:
+                    print(f'value should be minimun {rule_value}')
+                    return False
+            elif rule_name == 'max_value':
+                if value > rule_value:
+                    print(f'value should be maximum {rule_value}')
+                    return False
+            elif rule_name == 'valid_values':
+                if value not in rule_value:
+                    print(f'{value} is not valid')
+                    return False
+            elif rule_name == 'required':
+                if rule_value:
+                    if value is None:
+                        print(f'Required field is empty')
                         return False
-                elif rule_name == 'max_length':
-                    if len(value) > rule_value:
-                        print(f'length should be maximum {rule_value}')
-                        return False
-                elif rule_name == 'min_value':
-                    if value < rule_value:
-                        print(f'value should be minimun {rule_value}')
-                        return False
-                elif rule_name == 'max_value':
-                    if value > rule_value:
-                        print(f'value should be maximum {rule_value}')
-                        return False
-                elif rule_name == 'valid_values':
-                    if value not in rule_value:
-                        print(f'{value} is not valid')
-                        return False
-                elif rule_name == 'required':
-                    if rule_value:
-                        if value is None:
-                            print(f'Required field is empty')
-                            return False
-                elif rule_name == 'length':
-                    if len(value) != rule_value:
-                        print(f'Phone number length should be {rule_value}')
-                        return False
+            elif rule_name == 'length':
+                if len(str(value)) != rule_value:
+                    print(f'Phone number length should be {rule_value}')
+                    return False
     
     return True
 
                 
 
 print(validate(user_profile_dict, validation_rules_array))
-
-
-
-
-
-
