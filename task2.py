@@ -1,6 +1,6 @@
 user_profile_dict = {
-    'age': 'djh3',
-    'name': 25,
+    'age': 25,
+    'name': 'John Doe',
     'email': 'johndoe@example.com',
     'gender': 'male',
     'address': '123 Main St',
